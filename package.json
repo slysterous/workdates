@@ -1,6 +1,6 @@
 {
   "name": "workdates",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Date manipulation while taking workdays into account.",
   "main": "src/index.js",
   "scripts": {
