@@ -19,7 +19,7 @@ function subWorkingDays(date,days){
     var remainingdays= parseInt(days)%5;
     var newDate=moment(date);
     newDate=newDate.subtract(daysfromweeks,'days');
-    for(i=0;i<remainingdays;i++){
+    for(var i=0;i<remainingdays;i++){
         newDate=toLastWorkingDay(newDate);
     }
     return newDate;
@@ -29,7 +29,7 @@ function addWorkingDays(date,days){
     var remainingdays= parseInt(days)%5;
     var newDate=moment(date);
     newDate=newDate.add(daysfromweeks,'days');
-    for(i=0;i<remainingdays;i++){
+    for(var i=0;i<remainingdays;i++){
         newDate=toNextWorkingDay(newDate);
     }
     return newDate;
