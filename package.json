@@ -1,0 +1,24 @@
+{
+  "name": "workdates",
+  "version": "1.0.0",
+  "description": "Date manipulation while taking workdays into account.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slysterous/workdates.git"
+  },
+  "keywords": [
+    "date",
+    "workday",
+    "date-manipulation"
+  ],
+  "author": "Christos Petropoulos <chrispetropoulos91@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slysterous/workdates/issues"
+  },
+  "homepage": "https://github.com/slysterous/workdates#readme"
+}
