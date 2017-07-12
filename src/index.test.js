@@ -31,4 +31,24 @@ describe('Object\'s non working dates',function(){
         workdate.addNonWorkingDate(new Date());
         expect(workdate.nonWorkingDates !== undefined && workdate.nonWorkingDates.length > 0).to.be.true;
     })
+    it('removing non working dates',function(){
+        var date=new Date();
+        var workdate=new Workdate(new Date());
+        workdate.addNonWorkingDate(date);
+        workdate.removeNonWorkingDate(date);
+        expect(workdate.nonWorkingDates===undefined || workdate.nonWorkingDates.length == 0).to.be.true;
+    })
+})
+
+describe('isWorkingDayToday',function(){
+    it('it is a working day today',function(){
+        var date= new Date(2016,11, 23); //was friday
+        var workdate=new Workdate(date);
+        expect(workdate.isWorkingDayToday()).to.be.true;
+    })
+    it('it is not a working day today',function(){
+        var date= new Date(2016,11, 24); //was friday
+        var workdate=new Workdate(date);
+        expect(workdate.isWorkingDayToday()).to.be.false;
+    })
 })

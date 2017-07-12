@@ -17,35 +17,51 @@ function Workdate(date){
     } 
 }
 
-
 /**
  * Adds a new non working date to the workdate object in order to be calculated when operations with working days are performed
+ * @memberof Workdate
+ * @param {date} date - adds a non working date to the object's list of non working dates
  */
 Workdate.prototype.addNonWorkingDate=function(date){
     if(date instanceof Date){
         this.nonWorkingDates.push(date);
     }else{
-    }
-    
-}
 
-Workdate.removeNonWorkingDate=function(date){
+    }
+}
+/**
+ * Removes a non working date from the user's list, if the date exists
+ * @memberof Workdate
+ * @param {date} date - date to remove.
+ */
+Workdate.prototype.removeNonWorkingDate=function(date){
     //if this date is contained in the non working dates, then remove it
-    var index=this.nonworkingDates.map(Number).indexof(+date);
+    var index=this.nonWorkingDates.map(Number).indexOf(+date);
     if(index!=-1){
-        this.nonworkingDates.splice(index,1);
+        this.nonWorkingDates.splice(index,1);
     }else{
 
     }
 }
+
+/**
+ * Checks if today is a working day, taking into account all the users datax
+ * @memberof Workdate
+ */
 Workdate.prototype.isWorkingDayToday=function(){
-    //TODO include user non working dates
-    if(this.date.toDate.getDay()==0||this.date.toDate.getDay()==6){
+    var index=this.nonWorkingDates.map(Number).indexOf(+this.date.toDate());
+    if(index!=-1){
+        return false;
+    }else{
+
+    }
+    if(this.date.toDate().getDay()==0||this.date.toDate().getDay()==6){
         return false;
     }else{
         return true;
     }
 }
+
 
 Workdate.prototype.subWorkingDays=function(days){
     //TODO include user non working dates
@@ -67,17 +83,20 @@ Workdate.prototype.addWorkingDays=function(days){
     }
 }
 
+
 Workdate.prototype.workingDaysDiff=function(datefrom,dateto){
     //TODO include user non working dates
     var difference=Math.abs(moment(datefrom).diff(moment(dateto), 'days'));
     return(difference-((difference/7)*2));
 }
 
+
 Workdate.prototype.workingDaysDiffFromToday=function(date){
     //TODO include user non working dates
     var difference=Math.abs(moment(this.date.toDate).diff(moment(date), 'days'));
     return(difference-((difference/7)*2));
 }
+
 
 /**
  * calculates and returns an integer representing the calendar day difference between 2 dates
@@ -90,6 +109,7 @@ Workdate.prototype.workingDaysDiffFromToday=function(date){
 Workdate.prototype.DaysDiff=function(datefrom,dateto){
     return Math.abs(moment(datefrom).diff(moment(dateto), 'days'))
 }
+
 
 /**
  * adds calendar days,months,years to given date and returns it
@@ -128,7 +148,6 @@ Workdate.prototype.subtract=function(value,type){
         this.date.subtract(parseInt(value),'years');
     }
 }
-
 
 /**
 * sets the date to the previous day that is accounted as a working date 
@@ -179,24 +198,31 @@ Workdate.prototype.toNextWorkingDay=function(){
         //Sunday
         case 0:
             this.date.add(date,1,'days');
+            break;
         //Monday
         case 1:
             this.date.add(date,1,'days');
+            break;
         //Tuesday
         case 2:
             this.date.add(date,1,'days');
+            break;
         //Wednesday
         case 3:
             this.date.add(date,1,'days');
+            break;
         //Thursday
         case 4:
             this.date.add(date,1,'days');
+            break;
         //Friday
         case 5:
             this.date.add(date,3,'days');
+            break;
         //Saturday
         case 6:
             this.date.subtract(date,2,'days');
+            break;
     }
 }
 module.exports=Workdate
