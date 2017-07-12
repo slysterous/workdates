@@ -1,154 +1,202 @@
 'use strict';
 var moment=require('moment');
+
 /**
- * checks if the given date is a working day
- * TODO - to include holidays here
- * @function 
- * @param {date} date - date object to be manipulated
+ * Represents a Logger instance
+ * @constructor 
+ * @param {date} date - date object to initialize the object
  */
-function isWorkingDay(date){
-    if(date.getDay()==0||date.getDay()==6){
+function Workdate(date){
+    if(date instanceof Date){
+        var properdate=moment(date);
+        this.date=properdate;
+        this.nonWorkingDates=new Array();
+    }else{
+        this.date=undefined;
+        throw new Error('Provided date is not a date. workdate object\'s constructor requires a valid date object to operate')
+    } 
+}
+
+
+/**
+ * Adds a new non working date to the workdate object in order to be calculated when operations with working days are performed
+ */
+Workdate.prototype.addNonWorkingDate=function(date){
+    if(date instanceof Date){
+        this.nonWorkingDates.push(date);
+    }else{
+    }
+    
+}
+
+Workdate.removeNonWorkingDate=function(date){
+    //if this date is contained in the non working dates, then remove it
+    var index=this.nonworkingDates.map(Number).indexof(+date);
+    if(index!=-1){
+        this.nonworkingDates.splice(index,1);
+    }else{
+
+    }
+}
+Workdate.prototype.isWorkingDayToday=function(){
+    //TODO include user non working dates
+    if(this.date.toDate.getDay()==0||this.date.toDate.getDay()==6){
         return false;
     }else{
         return true;
     }
 }
 
-function subWorkingDays(date,days){
+Workdate.prototype.subWorkingDays=function(days){
+    //TODO include user non working dates
     var daysfromweeks= (parseInt(days)/5)*7;
     var remainingdays= parseInt(days)%5;
-    var newDate=moment(date);
-    newDate=newDate.subtract(daysfromweeks,'days');
+    this.date.subtract(daysfromweeks,'days');
     for(var i=0;i<remainingdays;i++){
-        newDate=toLastWorkingDay(newDate);
+        this.date=date.toLastWorkingDay();
     }
-    return newDate;
-}
-function addWorkingDays(date,days){
-    var daysfromweeks= (parseInt(days)/5)*7;
-    var remainingdays= parseInt(days)%5;
-    var newDate=moment(date);
-    newDate=newDate.add(daysfromweeks,'days');
-    for(var i=0;i<remainingdays;i++){
-        newDate=toNextWorkingDay(newDate);
-    }
-    return newDate;
 }
 
-function workingDaysDiff(datefrom,dateto){
-    var difference=Math.abs(moment(datefrom).diff(moment(dateto), 'days'))+1;
+Workdate.prototype.addWorkingDays=function(days){
+    //TODO include user non working dates
+    var daysfromweeks= (parseInt(days)/5)*7;
+    var remainingdays= parseInt(days)%5;
+    this.date.add(daysfromweeks,'days');
+    for(var i=0;i<remainingdays;i++){
+        this.date=date.toNextWorkingDay();
+    }
+}
+
+Workdate.prototype.workingDaysDiff=function(datefrom,dateto){
+    //TODO include user non working dates
+    var difference=Math.abs(moment(datefrom).diff(moment(dateto), 'days'));
     return(difference-((difference/7)*2));
 }
-function DaysDiff(datefrom,dateto){
-    return Math.abs(moment(datefrom).diff(moment(dateto), 'days'))+1
+
+Workdate.prototype.workingDaysDiffFromToday=function(date){
+    //TODO include user non working dates
+    var difference=Math.abs(moment(this.date.toDate).diff(moment(date), 'days'));
+    return(difference-((difference/7)*2));
 }
+
 /**
- * adds calendar days,months,years to given date and returns it
+ * calculates and returns an integer representing the calendar day difference between 2 dates
  * @function 
+ * @memberof Workdate
  * @param {date} date - date object to be manipulated
  * @param {integer} value - the value to be added
  * @param {string} type - dictates months,days or years selector to be added
  */
-function add(date,value,type){
-    var edited=moment(date);
+Workdate.prototype.DaysDiff=function(datefrom,dateto){
+    return Math.abs(moment(datefrom).diff(moment(dateto), 'days'))
+}
+
+/**
+ * adds calendar days,months,years to given date and returns it
+ * @function 
+ * @memberof Workdate
+ * @param {date} date - date object to be manipulated
+ * @param {integer} value - the value to be added
+ * @param {string} type - dictates months,days or years selector to be added
+ */
+Workdate.prototype.add=function(value,type){
     if(type==='days'||type==='day'){
-        edited.add(parseInt(value),'days');
+        this.date.add(parseInt(value),'days');
     }
     if(type==='months'||type==='month'){
-        edited.add(parseInt(value),'months');
+        this.date.add(parseInt(value),'months');
     }
     if(type==='years'||type==='year'){
-        edited.add(parseInt(value),'years');
+        this.date.add(parseInt(value),'years');
     }
-    return edited.toDate();
 }
 /**
  * subtracts calendar days,months,years to given date and returns it
  * @function 
- * @param {date} date - date object to be manipulated
+ * @memberof Workdate
  * @param {integer} value - the value to be subtracted
  * @param {string} type - dictates months,days or years selector to be subtracted
  */
-function subtract(date,value,type){
-    var edited=moment(date);
+Workdate.prototype.subtract=function(value,type){
     if(type==='days'||type==='day'){
-        edited.subtract(parseInt(value),'days');
+        this.date.subtract(parseInt(value),'days');
     }
     if(type==='months'||type==='month'){
-        edited.subtract(parseInt(value),'months');
+        this.date.subtract(parseInt(value),'months');
     }
     if(type==='years'||type==='year'){
-        edited.subtract(parseInt(value),'years');
+        this.date.subtract(parseInt(value),'years');
     }
-    return edited.toDate();
 }
+
+
 /**
- * sets the given date to the last working day and returns it as a new date
- * @function 
- * @param {date} date - date object to be manipulated
- */
-function toLastWorkingDay(date){
-    switch(date.getDay()){
+* sets the date to the previous day that is accounted as a working date 
+*@memberof Workdate
+*/
+Workdate.prototype.toLastWorkingDay=function(){
+    //TODO include user dates too
+    switch(this.date.toDate.getDay()){
         //Sunday
         case 0:
-            return subtract(date,2,'days');
+            this.date.subtract(date,2,'days');
+            break;
         //Monday
         case 1:
-            return subtract(date,3,'days');
+            this.date.subtract(date,3,'days');
+            break;
         //Tuesday
         case 2:
-            return subtract(date,1,'days');
+            this.date.subtract(date,1,'days');
+            break;
         //Wednesday
         case 3:
-            return subtract(date,1,'days');
+            this.date.subtract(date,1,'days');
+            break;
         //Thursday
         case 4:
-            return subtract(date,1,'days');
+            this.date.subtract(date,1,'days');
+            break;
         //Friday
         case 5:
-            return subtract(date,1,'days');
+            this.date.subtract(date,1,'days');
+            break;
         //Saturday
         case 6:
-            return subtract(date,1,'days');
+            this.date.subtract(date,1,'days');
+            break;
     }
 }
+
+
 /**
  * sets the given date to the next working day and returns it as a new date
- * @function 
- * @param {date} date - date object to be manipulated
+ * @memberof Workdate 
  */
-function toNextWorkingDay(date){
-    switch(date.getDay()){
+Workdate.prototype.toNextWorkingDay=function(){
+    //TODO include user non working dates too
+    switch(this.date.toDate.getDay()){
         //Sunday
         case 0:
-            return add(date,1,'days');
+            this.date.add(date,1,'days');
         //Monday
         case 1:
-            return add(date,1,'days');
+            this.date.add(date,1,'days');
         //Tuesday
         case 2:
-            return add(date,1,'days');
+            this.date.add(date,1,'days');
         //Wednesday
         case 3:
-            return add(date,1,'days');
+            this.date.add(date,1,'days');
         //Thursday
         case 4:
-            return add(date,1,'days');
+            this.date.add(date,1,'days');
         //Friday
         case 5:
-            return add(date,3,'days');
+            this.date.add(date,3,'days');
         //Saturday
         case 6:
-            return subtract(date,2,'days');
+            this.date.subtract(date,2,'days');
     }
 }
-module.exports={
-    subWorkingDays,
-    addWorkingDays,
-    toLastWorkingDay,
-    toNextWorkingDay,
-    add,
-    workingDaysDiff,
-    DaysDiff,
-    subtract
-}
+module.exports=Workdate
