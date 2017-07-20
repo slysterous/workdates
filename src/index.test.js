@@ -11,20 +11,22 @@ describe('workdates',function(){
 })
 
 describe('Date Difference',function(){
-     /*it('yesterday and today have to have 1 day difference', function(){
-        var workdate=new Workdate(new Date());
-        var yesterday=new Workdate(new Date());
-        yesterday.subtract(1,'day');
-        expect((workdate.DaysDiff(workdate.date.toDate(),yesterday.date.toDate()))==1).to.be.true;
-    })*/
+    date=new Date();
+    var today=new Workdate(date);
+    var tomorrow=new Workdate(date);
+    var yesterday=new Workdate(date);
+    tomorrow.add(1,'day');
+    yesterday.subtract(1,'day');
+    it('yesterday and today have to have 1 day difference', function(){
+
+        expect((today.DaysDiff(today.date.toDate(),yesterday.date.toDate()))==1).to.be.true;
+    })
     it('today and tomorrow have to have 1 day difference', function(){
-        var workdate=new Workdate(new Date());
-        var tomorrow=new Workdate(new Date());
-        tomorrow.add(1,'day');
-        expect((workdate.DaysDiff(workdate.date.toDate(),tomorrow.date.toDate()))==1).to.be.true;
+
+        expect((today.DaysDiff(today.date.toDate(),tomorrow.date.toDate()))==1).to.be.true;
     })
 })
-
+ 
 describe('Object\'s non working dates',function(){
     it('adding non working date to empty object',function(){
         var workdate=new Workdate(new Date());

@@ -44,6 +44,9 @@ Workdate.prototype.removeNonWorkingDate=function(date){
     }
 }
 
+
+
+
 /**
  * Checks if today is a working day, taking into account all the users datax
  * @memberof Workdate
