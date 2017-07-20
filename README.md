@@ -3,7 +3,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/slysterous/workdates/badge.svg)](https://snyk.io/test/github/slysterous/workdates)
 [![NPM](https://nodei.co/npm/workdates.png?downloads=true&downloadRank=true)](https://nodei.co/npm/workdates/)
 
-a simple wrapper for <a href="https://github.com/winstonjs/winston">winston</a> and <a href="https://github.com/winstonjs/winston-daily-rotate-file">winston-daily-rotate-file</a> Date Manipulation considering Working dates
+Date Manipulation considering Working dates
 
 
 ## Installation
