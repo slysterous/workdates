@@ -6,16 +6,13 @@ var moment=moment();
 var date=moment.toDate();
 
 
-console.log(date)
+console.log(date) 
 //date.setMilliseconds(1);
 var weekworkdays=['Monday','Tuesday','Wednesday','Thursday','Friday'];
 describe('workdates',function(){
     it(' new workdate object should not be undefined',function(){
         var workdate=new Workdate(new Date(),weekworkdays);
-<<<<<<< HEAD
-=======
         console.log('WeekWorkDays:',workdate.weekWorkDays);
->>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
         expect(workdate.date.toDate() instanceof Date).to.be.true;
     })
    
