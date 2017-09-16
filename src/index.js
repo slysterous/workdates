@@ -12,15 +12,12 @@ function Workdate(date,weekWorkingDays){
             var properdate=moment(date);
             this.date=properdate;
             this.weekWorkDays=new Array();
-<<<<<<< HEAD
-=======
             //check if weekworkingdays are defined
             if((weekWorkingDays==undefined||weekWorkingDays==null) && weekWorkingDays.length<=0){
                 throw new Error('A workdate object has to have at least one day as a working day...');
             }
             this.weekWorkDays=getFormattedWeekWorkingdays(weekWorkingDays);
             // define and set week workdates. use JS day definition sunday is 0 saturday is 6.
->>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
             this.nonWorkingDates=new Array();
         }else{
             this.date=undefined;
@@ -94,7 +91,7 @@ Workdate.prototype.isWorkingDayToday=function(){
 Workdate.prototype.DaysDiff=function(datefrom,dateto){
     return Math.abs(moment(datefrom).diff(moment(dateto), 'days'))
 }
-/**
+/** 
  * adds calendar days,months,years to given date and returns it
  * @function 
  * @memberof Workdate
@@ -137,10 +134,7 @@ Workdate.prototype.subtract=function(value,type){
 
 Workdate.prototype.subWorkingDays=function(days){
     //TODO include user non working dates
-<<<<<<< HEAD
-=======
     //TODO change to custom workdates usage 
->>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var daysfromweeks= (parseInt(days)/5)*7;
     var remainingdays= parseInt(days)%5;
     this.date.subtract(daysfromweeks,'days');
@@ -151,10 +145,7 @@ Workdate.prototype.subWorkingDays=function(days){
 
 Workdate.prototype.addWorkingDays=function(days){
     //TODO include user non working dates
-<<<<<<< HEAD
-=======
     //TODO change to custom workdates usage 
->>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var daysfromweeks= (parseInt(days)/5)*7;
     var remainingdays= parseInt(days)%5;
     this.date.add(daysfromweeks,'days');
@@ -166,10 +157,7 @@ Workdate.prototype.addWorkingDays=function(days){
 
 Workdate.prototype.workingDaysDiff=function(datefrom,dateto){
     //TODO include user non working dates
-<<<<<<< HEAD
-=======
      //TODO change to custom workdates usage 
->>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var difference=Math.abs(moment(datefrom).diff(moment(dateto), 'days'));
     return(difference-((difference/7)*2));
 }
@@ -177,10 +165,7 @@ Workdate.prototype.workingDaysDiff=function(datefrom,dateto){
 
 Workdate.prototype.workingDaysDiffFromToday=function(date){
     //TODO include user non working dates
-<<<<<<< HEAD
-=======
      //TODO change to custom workdates usage 
->>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var difference=Math.abs(moment(this.date.toDate).diff(moment(date), 'days'));
     return(difference-((difference/7)*2));
 }
