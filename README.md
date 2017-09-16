@@ -3,7 +3,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/slysterous/workdates/badge.svg)](https://snyk.io/test/github/slysterous/workdates)
 [![NPM](https://nodei.co/npm/workdates.png?downloads=true&downloadRank=true)](https://nodei.co/npm/workdates/)
 
-Date Manipulation considering Working dates
+Date Manipulation with Working days
 
 
 ## Installation

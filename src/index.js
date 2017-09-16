@@ -2,7 +2,7 @@
 var moment=require('moment');
 
 /**
- * Represents a Logger instance
+ * Represents a Workdate instance
  * @constructor 
  * @param {date} date - date object to initialize the object
  */
@@ -12,6 +12,15 @@ function Workdate(date,weekWorkingDays){
             var properdate=moment(date);
             this.date=properdate;
             this.weekWorkDays=new Array();
+<<<<<<< HEAD
+=======
+            //check if weekworkingdays are defined
+            if((weekWorkingDays==undefined||weekWorkingDays==null) && weekWorkingDays.length<=0){
+                throw new Error('A workdate object has to have at least one day as a working day...');
+            }
+            this.weekWorkDays=getFormattedWeekWorkingdays(weekWorkingDays);
+            // define and set week workdates. use JS day definition sunday is 0 saturday is 6.
+>>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
             this.nonWorkingDates=new Array();
         }else{
             this.date=undefined;
@@ -60,10 +69,18 @@ Workdate.prototype.isWorkingDayToday=function(){
     }else{
 
     }
-    if(this.date.toDate().getDay()==0||this.date.toDate().getDay()==6){
+    // implement custom workdates checks
+
+    /*if(this.date.toDate().getDay()==0||this.date.toDate().getDay()==6){
         return false;
     }else{
         return true;
+    }*/
+    //TODO implement custom non working days checks
+    if(this.weekWorkDays.includes(this.date.toDate().getDay())){
+        return true;
+    }else{
+        return false;
     }
 }
 /**
@@ -120,6 +137,10 @@ Workdate.prototype.subtract=function(value,type){
 
 Workdate.prototype.subWorkingDays=function(days){
     //TODO include user non working dates
+<<<<<<< HEAD
+=======
+    //TODO change to custom workdates usage 
+>>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var daysfromweeks= (parseInt(days)/5)*7;
     var remainingdays= parseInt(days)%5;
     this.date.subtract(daysfromweeks,'days');
@@ -130,6 +151,10 @@ Workdate.prototype.subWorkingDays=function(days){
 
 Workdate.prototype.addWorkingDays=function(days){
     //TODO include user non working dates
+<<<<<<< HEAD
+=======
+    //TODO change to custom workdates usage 
+>>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var daysfromweeks= (parseInt(days)/5)*7;
     var remainingdays= parseInt(days)%5;
     this.date.add(daysfromweeks,'days');
@@ -141,6 +166,10 @@ Workdate.prototype.addWorkingDays=function(days){
 
 Workdate.prototype.workingDaysDiff=function(datefrom,dateto){
     //TODO include user non working dates
+<<<<<<< HEAD
+=======
+     //TODO change to custom workdates usage 
+>>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var difference=Math.abs(moment(datefrom).diff(moment(dateto), 'days'));
     return(difference-((difference/7)*2));
 }
@@ -148,6 +177,10 @@ Workdate.prototype.workingDaysDiff=function(datefrom,dateto){
 
 Workdate.prototype.workingDaysDiffFromToday=function(date){
     //TODO include user non working dates
+<<<<<<< HEAD
+=======
+     //TODO change to custom workdates usage 
+>>>>>>> ccb2ee4ed79418f4fe0439968128e30b8c3eca50
     var difference=Math.abs(moment(this.date.toDate).diff(moment(date), 'days'));
     return(difference-((difference/7)*2));
 }
@@ -159,6 +192,7 @@ Workdate.prototype.workingDaysDiffFromToday=function(date){
 */
 Workdate.prototype.toLastWorkingDay=function(){
     //TODO include user dates too
+     //TODO change to custom workdates usage 
     switch(this.date.toDate.getDay()){
         //Sunday
         case 0:
@@ -198,6 +232,7 @@ Workdate.prototype.toLastWorkingDay=function(){
  */
 Workdate.prototype.toNextWorkingDay=function(){
     //TODO include user non working dates too
+     //TODO change to custom workdates usage 
     switch(this.date.toDate.getDay()){
         //Sunday
         case 0:
@@ -230,3 +265,85 @@ Workdate.prototype.toNextWorkingDay=function(){
     }
 }
 module.exports=Workdate
+//UTILS----------------------------
+
+
+/**
+ * 
+ * Format user provided week working days to be in proper format for being used by the Workdate object
+ * 
+ */
+function getFormattedWeekWorkingdays(weekworkingdays){
+    var properworkingdays=new Array();
+    weekworkingdays.forEach(function(day) {
+        switch (day) {
+            case 'Sunday':
+                properworkingdays.push(0);
+                break;
+            case 'Monday':
+                properworkingdays.push(1);
+                break;
+            case 'Tuesday':
+                properworkingdays.push(2);
+                break;
+            case 'Wednesday':
+                properworkingdays.push(3);
+                break;
+            case 'Thursday':
+                properworkingdays.push(4);
+                break;
+            case 'Friday':
+                properworkingdays.push(5);
+                break;
+            case 'Saturday':
+                properworkingdays.push(6);
+                break;
+            case '0':
+                properworkingdays.push(0);
+                break;
+            case '1':
+                properworkingdays.push(1);
+                break;
+            case '2':
+                properworkingdays.push(2);
+                break;
+            case '3':
+                properworkingdays.push(3);
+                break;
+            case '4':
+                properworkingdays.push(4);
+                break;
+            case '5':
+                properworkingdays.push(5);
+                break;
+            case '6':
+                properworkingdays.push(6);
+                break;
+                case 0:
+                properworkingdays.push(0);
+                break;
+            case 1:
+                properworkingdays.push(1);
+                break;
+            case 2:
+                properworkingdays.push(2);
+                break;
+            case 3:
+                properworkingdays.push(3);
+                break;
+            case 4:
+                properworkingdays.push(4);
+                break;
+            case 5:
+                properworkingdays.push(5);
+                break;
+            case 6:
+                properworkingdays.push(6);
+                break;
+            default:
+                break;
+        }
+    }, this);
+    return properworkingdays;
+    
+}
