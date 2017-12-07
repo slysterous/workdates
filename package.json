@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/slysterous/workdates#readme",
   "dependencies": {
-    "moment": "2.18.1"
+    "moment": "2.19.3"
   },
   "devDependencies": {
     "chai": "4.0.2",
